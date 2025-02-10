@@ -48,7 +48,7 @@ public class Main {
 				// Separar os dados da linha usando o delimitador ";"
 	            String[] dados = linha.split(";");
 
-	            // Verifica se a linha possui dados suficientes (nome, data, salário e cargo)
+	            // Verifica se a linha possui dados suficientes (nome, data, salário e funcao)
 	            if (dados.length == 4) {
 	                String nome = dados[0];
 	                String dataNascimento = dados[1];
@@ -70,7 +70,9 @@ public class Main {
 
 		// 3.2 – Remover o funcionário “João” da lista.
 
-		quadroFuncionarios.removeIf(funcionario -> funcionario.getNome().equalsIgnoreCase("Joâo"));
+		removerFuncionarioPeloNome("joão", quadroFuncionarios);
+		System.out.println();
+	
 
 		// 3.3 – Imprimir todos os funcionários com todas suas informações, sendo que:
 		// • informação de data deve ser exibido no formato dd/mm/aaaa;
@@ -178,5 +180,16 @@ public class Main {
 					+ " salários mínimos.");
 		});
 
+	}
+	
+	public static void removerFuncionarioPeloNome(String nome, List<Funcionario> quadroFuncionarios) {
+		if(quadroFuncionarios.isEmpty()) {
+			System.out.println("A lista está vazia");
+		} else {
+			quadroFuncionarios.removeIf(funcionario -> funcionario.getNome().equalsIgnoreCase(nome));
+			System.out.println("Funcionario " + nome + " removido com sucesso.");
+		}
+		
+		
 	}
 }
