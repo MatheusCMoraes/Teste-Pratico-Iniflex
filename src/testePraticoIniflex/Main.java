@@ -27,11 +27,15 @@ public class Main {
 	private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public static void main(String[] args) {
-		DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
-		symbols.setDecimalSeparator(',');
-		symbols.setGroupingSeparator('.');
+		Locale locale = Locale.forLanguageTag("pt-BR");
+        
+        // Configurando símbolos
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
+        symbols.setDecimalSeparator(',');
+        symbols.setGroupingSeparator('.');
 
-		DecimalFormat df = new DecimalFormat("#,##0.00", symbols);
+        // Definindo o formato
+        DecimalFormat df = new DecimalFormat("#,##0.00", symbols);
 
 		List<Funcionario> quadroFuncionarios = new ArrayList<>();
 
@@ -85,13 +89,10 @@ public class Main {
 		// 3.4 – Os funcionários receberam 10% de aumento de salário, atualizar a lista
 		// de funcionários com novo valor.
 		
-		double aumentoPercentual = 0.1;
-		ajustarSalario(aumentoPercentual, quadroFuncionarios);
-		
-		
-
 		System.out.println();
 		System.out.println("Lista com os novos salarios");
+		double aumentoPercentual = 0.1;
+		ajustarSalario(aumentoPercentual, quadroFuncionarios);
 		quadroFuncionarios.stream().forEach(System.out::println);
 
 		// 3.5 – Agrupar os funcionários por função em um MAP, sendo a chave a “função”
@@ -112,15 +113,9 @@ public class Main {
 		System.out.println();
 
 		System.out.println("Funcionario mais velho");
+		funcionarioMaisVelho(quadroFuncionarios);
 
-		Optional<Funcionario> funcionarioMaisVelho = quadroFuncionarios.stream()
-				.min(Comparator.comparing(funcionario -> funcionario.getDataNascimento()));
-
-		funcionarioMaisVelho.ifPresent(funcionario -> {
-			int idade = Period.between(LocalDate.parse(funcionario.getDataNascimento(), fmt), LocalDate.now())
-					.getYears();
-			System.out.println("Nome: " + funcionario.getNome() + " - Idade: " + idade + " anos");
-		});
+		
 
 		// 3.10 – Imprimir a lista de funcionários por ordem alfabética.
 		System.out.println();
@@ -213,4 +208,15 @@ public class Main {
 		}).forEach(funcionario -> System.out.println(funcionario.getNome() + " - " + funcionario.getDataNascimento()));
 		
 	}
+	
+	public static void funcionarioMaisVelho(List<Funcionario> quadroFuncionarios) {
+        Optional<Funcionario> funcionarioMaisVelho = quadroFuncionarios.stream()
+                .min(Comparator.comparing(funcionario -> LocalDate.parse(funcionario.getDataNascimento(), fmt)));
+
+        funcionarioMaisVelho.ifPresent(funcionario -> {
+            int idade = Period.between(LocalDate.parse(funcionario.getDataNascimento(), fmt), LocalDate.now())
+                    .getYears();
+            System.out.println("Nome: " + funcionario.getNome() + " - Idade: " + idade + " anos");
+        });
+    }
 }
