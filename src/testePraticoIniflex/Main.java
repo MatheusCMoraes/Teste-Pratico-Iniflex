@@ -78,7 +78,7 @@ public class Main {
 		// • informação de data deve ser exibido no formato dd/mm/aaaa;
 		// • informação de valor numérico deve ser exibida no formatado com separador de
 		// milhar como ponto e decimal como vírgula.
-
+		System.out.println("Lista de funcionários");
 		quadroFuncionarios.stream().forEach(System.out::println);
 
 		// 3.4 – Os funcionários receberam 10% de aumento de salário, atualizar a lista
@@ -95,30 +95,8 @@ public class Main {
 
 		// 3.5 – Agrupar os funcionários por função em um MAP, sendo a chave a “função”
 		// e o valor a “lista de funcionários”.
-
-		Map<String, List<Funcionario>> funcionariosPorFuncao = new HashMap<>();
-
-		for (Funcionario funcionario : quadroFuncionarios) {
-			funcionariosPorFuncao.computeIfAbsent(funcionario.getFuncao(), k -> new ArrayList<>()).add(funcionario);
-		}
-
-		System.out.println();
-		System.out.println("Funcionários por função");
-
-		for (Entry<String, List<Funcionario>> funcao : funcionariosPorFuncao.entrySet()) {
-
-			System.out.print("Função: " + funcao.getKey());
-
-			if (funcao.getValue().isEmpty()) {
-				System.out.println("Nenhum funcionário encontrado para essa função!");
-			}
-
-			funcao.getValue().forEach(funcionario -> {
-				System.out.print(" --  " + funcionario.getNome());
-			});
-
-			System.out.println();
-		}
+		funcionariosPorFuncao(quadroFuncionarios);
+		
 
 		System.out.println();
 
@@ -197,5 +175,34 @@ public class Main {
 
 		});
 	
+	}
+	
+	public static void funcionariosPorFuncao(List<Funcionario> quadroFuncionarios) {
+		
+		Map<String, List<Funcionario>> funcionariosPorFuncao = new HashMap<>();
+
+		for (Funcionario funcionario : quadroFuncionarios) {
+			funcionariosPorFuncao.computeIfAbsent(funcionario.getFuncao(), k -> new ArrayList<>()).add(funcionario);
+		}
+
+		System.out.println();
+		System.out.println("Funcionários por função");
+
+		for (Entry<String, List<Funcionario>> funcao : funcionariosPorFuncao.entrySet()) {
+
+			System.out.print("Função: " + funcao.getKey() + " - ");
+
+			if (funcao.getValue().isEmpty()) {
+				System.out.println("Nenhum funcionário encontrado para essa função!");
+			} else {
+				
+				funcao.getValue().forEach(funcionario -> {
+					System.out.print("	" + funcionario.getNome());
+				});
+			}
+
+			System.out.println();
+		}
+		
 	}
 }
