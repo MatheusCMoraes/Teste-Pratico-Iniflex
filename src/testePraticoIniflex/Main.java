@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import entities.Funcionario;
+import entities.MesesAno;
 
 public class Main {
 
@@ -103,10 +104,8 @@ public class Main {
 		// 3.8 – Imprimir os funcionários que fazem aniversário no mês 10 e 12.
 
 		System.out.println("Funcionarios que fazem aniversario em Outubro e Dezembro");
-		quadroFuncionarios.stream().filter(funcionario -> {
-			int mesNascimento = LocalDate.parse(funcionario.getDataNascimento(), fmt).getMonthValue();
-			return mesNascimento == 10 || mesNascimento == 12;
-		}).forEach(funcionario -> System.out.println(funcionario.getNome() + " - " + funcionario.getDataNascimento()));
+		aniversariantesMes(quadroFuncionarios, MesesAno.valueOf("OUTUBRO"), MesesAno.valueOf("DEZEMBRO"));
+		
 
 		// 3.9 – Imprimir o funcionário com a maior idade, exibir os atributos: nome e
 		// idade.
@@ -203,6 +202,15 @@ public class Main {
 
 			System.out.println();
 		}
+		
+	}
+	
+	public static void aniversariantesMes(List<Funcionario> quadroFuncionarios, MesesAno mes1, MesesAno mes2) {
+		
+		quadroFuncionarios.stream().filter(funcionario -> {
+			int mesNascimento = LocalDate.parse(funcionario.getDataNascimento(), fmt).getMonthValue();
+			return mesNascimento == mes1.getNumero() || mesNascimento == mes2.getNumero();
+		}).forEach(funcionario -> System.out.println(funcionario.getNome() + " - " + funcionario.getDataNascimento()));
 		
 	}
 }
