@@ -83,16 +83,11 @@ public class Main {
 
 		// 3.4 – Os funcionários receberam 10% de aumento de salário, atualizar a lista
 		// de funcionários com novo valor.
-
-		quadroFuncionarios.stream().forEach(funcionario -> {
-
-			BigDecimal salarioAtual = funcionario.getSalario();
-
-			double aumentoPercentual = 0.1;
-
-			funcionario.setSalario(salarioAtual.multiply(new BigDecimal(1 + aumentoPercentual)));
-
-		});
+		
+		double aumentoPercentual = 0.1;
+		ajustarSalario(aumentoPercentual, quadroFuncionarios);
+		
+		
 
 		System.out.println();
 		System.out.println("Lista com os novos salarios");
@@ -189,7 +184,18 @@ public class Main {
 			quadroFuncionarios.removeIf(funcionario -> funcionario.getNome().equalsIgnoreCase(nome));
 			System.out.println("Funcionario " + nome + " removido com sucesso.");
 		}
-		
-		
+	}
+	
+	
+	public static void ajustarSalario(double aumentoPercentual, List<Funcionario> quadroFuncionarios) {
+		quadroFuncionarios.stream().forEach(funcionario -> {
+
+			BigDecimal salarioAtual = funcionario.getSalario();
+
+
+			funcionario.setSalario(salarioAtual.multiply(new BigDecimal(1 + aumentoPercentual)));
+
+		});
+	
 	}
 }
